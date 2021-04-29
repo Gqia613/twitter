@@ -1,11 +1,11 @@
 <?php $__env->startSection('title', 'ツイート検索'); ?>
 
 <?php $__env->startSection('menu'); ?>
-    <a href="/">マイページに戻る</a>
+    <a href="/mypage">マイページに戻る</a>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <form action="/search" method="post">
+    <form action="/mypage/search" method="post">
         <?php echo csrf_field(); ?>
         <input type="text" name="keyword">
         <input type="submit" value="検索">

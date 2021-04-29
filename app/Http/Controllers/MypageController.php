@@ -18,9 +18,9 @@ class MypageController extends Controller
     public function index(Request $request)
     {
         // ログインしていなかったら、Login画面を表示
-        // if (!Auth::check()) {
-        //     return redirect('/login');
-        // }
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
 
         date_default_timezone_set('Asia/Tokyo');
         $userId = Auth::id();
@@ -60,13 +60,13 @@ class MypageController extends Controller
 
         date_default_timezone_set('Asia/Tokyo');
         if(!empty($data)) {
+
             if(strtotime(date("Y/m/d H:i")) >= strtotime($reservation_time)) {
                 $token = Token::select(['access_token', 'access_token_secret'])->where('user_id', $userId)->first();
                 $access_token = $token['access_token'];
                 $access_token_secret = $token['access_token_secret'];
                 // TweetUtil::tweet($token->access_token, $token->access_token_secret, $data->content);
-                // TweetUtil::tweet($access_token, $access_token_secret, $content);
-                AutoFallowUtil::autotweet($access_token, $access_token_secret, $content);
+                TweetUtil::tweet($access_token, $access_token_secret, $content);
                 
                 $content = Content::find($data['id']); 
                 $form = ['del_flag' => 1];
@@ -201,37 +201,45 @@ class MypageController extends Controller
         $flg2 = 1;
         $flg3 = 1;
 
-        if($token->delete_flg == '0') {
-            if(date("H:i") == '06:30' && $flg1 == 1) {
-                foreach($tokens as $token) {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment1);
+        foreach($tokens as $token) {
+            // if($token->delete_flg == '0') {
+                if(date("H:i") == '06:30' && $flg1 == 1) {
+                    foreach($tokens as $token) {
+                        if($token->delete_flg == '0') {
+                            AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment1);
+                            sleep(180);
+                        }
+                    }
+                    $flg1 = 0;
                     sleep(180);
+                    $flg1 = 1;
+
                 }
-                $flg1 = 0;
-                sleep(180);
-                $flg1 = 1;
-            }
-            
-            if(date("H:i") == '12:30' && $flg2 == 1) {
-                foreach($tokens as $token) {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment2);
+                if(date("H:i") == '12:30' && $flg2 == 1) {
+                    foreach($tokens as $token) {
+                        if($token->delete_flg == '0') {
+                            AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment2);
+                            sleep(180);
+                        }
+                    }
+                    $flg1 = 0;
                     sleep(180);
+                    $flg2 = 1;
+
                 }
-                $flg1 = 0;
-                sleep(180);
-                $flg2 = 1;
-            }
-            
-            if(date("H:i") == '19:30' && $flg3 == 1) {
-                foreach($tokens as $token) {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment3);
+                if(date("H:i") == '19:30' && $flg3 == 1) {
+                    foreach($tokens as $token) {
+                        if($token->delete_flg == '0') {
+                            AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment3);
+                            sleep(180);
+                        }
+                    }
+                    $flg1 = 0;
                     sleep(180);
+                    $flg1 = 1;
                 }
-                $flg1 = 0;
-                sleep(180);
-                $flg1 = 1;
-            }
-        }
+            // }
+        }  
         return view('mypage.debug', ['tokens' => $tokens, 'date' => date("H:i")]);
     }
 }

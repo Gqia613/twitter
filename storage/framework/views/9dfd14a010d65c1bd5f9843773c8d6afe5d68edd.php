@@ -1,10 +1,8 @@
 <?php $__env->startSection('title', 'ホーム'); ?>
 
 <?php $__env->startSection('menu'); ?>
-    <a href="/tweeted">投稿済み一覧</a>
-    <a href="/search">検索</a>
-    <a href="/favorite">いいねする</a>
-    <a href="/autofallow">自動化する</a>
+    <a href="/mypage/tweeted">投稿済み一覧</a>
+    <a href="/mypage/search">検索</a>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('main'); ?>
@@ -23,12 +21,10 @@ $message = $errors->first('content'); ?>
 if (isset($messageCache)) { $message = $messageCache; }
 endif; ?>
     <table>
-    <form action="/" method="post">
+    <form action="/mypage" method="post">
         <?php echo csrf_field(); ?>
-        <?php if(isset($userId)): ?>
-        <input type="hidden" name="user_id" value="<?php echo e($userId); ?>">
-        <?php endif; ?>
         <input type="hidden" name="del_flag" value="0">
+        <!-- <input type="file" name="image" accept="image/jpeg, image/png"> -->
         <tr>
             <th>日付</th>
         </tr>
@@ -50,7 +46,6 @@ endif; ?>
 
 <?php $__env->startSection('content'); ?>
     <section>
-    <?php if(isset($items)): ?>
         <?php $__currentLoopData = $items; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
         <div class="contents">
             <?php            
@@ -64,14 +59,13 @@ endif; ?>
             <p class="reservation_time">予約時間：<?php echo e($total); ?></p>
             <h3>投稿内容</h3>
             <p class="content"><?php echo e($item->content); ?></p>
-            <form action="/delete" method="post">
+            <form action="/mypage/delete" method="post">
                 <?php echo csrf_field(); ?>
                 <input type="hidden" name="id" value="<?php echo e($item->id); ?>">
                 <input class="button" type="submit" value="取消">
             </form>
         </div>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-    <?php endif; ?>
     </section>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('layouts.index', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/sekimichiru/Desktop/laravellearning/twitterapi/resources/views/mypage/index.blade.php ENDPATH**/ ?>
