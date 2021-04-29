@@ -1,6 +1,6 @@
 @extends('layouts.index')
 
-@section('title', 'test')
+@section('title', 'ホーム')
 
 @section('menu')
     <a href="/tweeted">投稿済み一覧</a>
