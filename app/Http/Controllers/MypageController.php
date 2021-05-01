@@ -99,7 +99,7 @@ class MypageController extends Controller
     public function searchRes(Request $request)
     {
         $userId = Auth::id();
-        $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('userid', $userId)->first();
+        $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
         $tweets = SearchUtil::search($request->keyword, $tokens);
         return view('mypage.search', ['tweets' => $tweets]);
     }
