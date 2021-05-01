@@ -9,12 +9,10 @@ class FavoriteUtil
 {
 	public static function autofollow(string $access, string $secret, string $keyword)
 	{
-		$TWITTER_API_KEY = 'BU3nJV0t3sQDVJWVEWjeX589p';
-		$TWITTER_API_SECRET = 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ';
 		$access_token = $access;
 		$access_token_secret = $secret;
 
-        $twitter = new TwitterOAuth($TWITTER_API_KEY, $TWITTER_API_SECRET, $access_token, $access_token_secret);
+        $twitter = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'), $access_token, $access_token_secret);
 
         $tweets = $twitter->get('search/tweets', ['q' => $keyword, 'count' => 5]);
         

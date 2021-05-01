@@ -7,14 +7,12 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class FavoriteUtil
 {
-    public static function favorite($keyword, $num)
+    public static function favorite($keyword, $num, $tokens)
     {
-        $consumer_key = 'BU3nJV0t3sQDVJWVEWjeX589p';
-        $consumer_key_sercret = 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ';
-        $access_token = '3847413613-OX7PRl3lsP6sBldYG9juAwlaVT4ZmnruIz34mFp';
-        $access_token_secret = 'N6qIcYz0KGkCNS4KBzAb6otC6pQxq6JOl5rK0jnP7TjEZ';
+        $access_token = $tokens->access_token;
+        $access_token_secret = $tokens->access_token_secret;
 
-        $connection = new TwitterOAuth($consumer_key, $consumer_key_sercret, $access_token, $access_token_secret);
+        $connection = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'), $access_token, $access_token_secret);
 
         $tweets = $connection->get('search/tweets', ['q' => $keyword, 'count' => $num]);
         

@@ -111,7 +111,9 @@ class MypageController extends Controller
 
     public function favoriteRes(Request $request)
     {
-        FavoriteUtil::favorite($request->keyword, $request->num);
+        $userId = Auth::id();
+        $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
+        FavoriteUtil::favorite($request->keyword, $request->num, $tokens);
         
         return redirect('/');
     }
@@ -129,8 +131,8 @@ class MypageController extends Controller
 		// define('CALLBACK_URL', env('CALLBACK_URL'));
 
 		//TwitterOAuthのインスタンスを生成し、Twitterからリクエストトークンを取得する
-		$twitter_connect = new TwitterOAuth(env('TWITTER_API_KEY'), env('TWITTER_API_SECRET'));
-		$request_token = $twitter_connect->oauth('oauth/request_token', ['oauth_callback' => env('CALLBACK_URL')]);
+		$twitter_connect = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'));
+		$request_token = $twitter_connect->oauth('oauth/request_token', ['oauth_callback' => config('twitter.callback_url')]);
         
 		$request->session()->put('oauth_token', $request_token['oauth_token']);
 		$request->session()->put('oauth_token_secret', $request_token['oauth_token_secret']);
@@ -152,7 +154,7 @@ class MypageController extends Controller
             return redirect('/');
         }
 
-        $twitter = new TwitterOAuth(env('TWITTER_API_KEY'), env('TWITTER_API_SECRET'));
+        $twitter = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'));
 
         $token = $twitter->oauth('oauth/access_token', array(
             'oauth_verifier' => $request->oauth_verifier,

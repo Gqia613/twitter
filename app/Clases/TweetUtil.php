@@ -9,12 +9,10 @@ class TweetUtil
 {
     public static function tweet(string $access = null, string $secret = null, string $comment = null)
     {
-        $TWITTER_API_KEY = 'BU3nJV0t3sQDVJWVEWjeX589p';
-		$TWITTER_API_SECRET = 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ';
 		$access_token = $access;
 		$access_token_secret = $secret;
 
-		$twitter = new TwitterOAuth($TWITTER_API_KEY, $TWITTER_API_SECRET, $access_token, $access_token_secret);
+		$twitter = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'), $access_token, $access_token_secret);
 		$result = $twitter->post('statuses/update', array('status' => $comment));
         // $data = Content::where('del_flag', 0)->orderBy('reservation_time', 'asc')->first();
         // $reservation_time = $data['reservation_time'];
