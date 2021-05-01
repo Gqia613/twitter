@@ -8,6 +8,7 @@ use App\Clases\TweetUtil;
 use App\Clases\SearchUtil;
 use App\Clases\FavoriteUtil;
 use App\Clases\AutoFallowUtil;
+use App\Clases\AutoTweetUtil;
 use App\Models\Content;
 use App\Models\Token;
 use Abraham\TwitterOAuth\TwitterOAuth;
@@ -97,7 +98,9 @@ class MypageController extends Controller
 
     public function searchRes(Request $request)
     {
-        $tweets = SearchUtil::search($request->keyword);
+        $userId = Auth::id();
+        $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('userid', $userId)->first();
+        $tweets = SearchUtil::search($request->keyword, $tokens);
         return view('mypage.search', ['tweets' => $tweets]);
     }
 
@@ -120,14 +123,14 @@ class MypageController extends Controller
 
     public function autoRes(Request $request)
     {
-		define('TWITTER_API_KEY', 'BU3nJV0t3sQDVJWVEWjeX589p');
-		define('TWITTER_API_SECRET', 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ');
+		define('TWITTER_API_KEY', env('TWITTER_API_KEY'));
+		define('TWITTER_API_SECRET', env('TWITTER_API_SECRET'));
 		// define('CALLBACK_URL', 'http://localhost:8000/callback');
-		define('CALLBACK_URL', 'https://kairuseki.site/callback');
+		define('CALLBACK_URL', env('CALLBACK_URL'));
 
 		//TwitterOAuthのインスタンスを生成し、Twitterからリクエストトークンを取得する
-		$twitter_connect = new TwitterOAuth(TWITTER_API_KEY, TWITTER_API_SECRET);
-		$request_token = $twitter_connect->oauth('oauth/request_token', ['oauth_callback' => CALLBACK_URL]);
+		$twitter_connect = new TwitterOAuth(env('TWITTER_API_KEY'), env('TWITTER_API_SECRET'));
+		$request_token = $twitter_connect->oauth('oauth/request_token', ['oauth_callback' => env('CALLBACK_URL')]);
         
 		$request->session()->put('oauth_token', $request_token['oauth_token']);
 		$request->session()->put('oauth_token_secret', $request_token['oauth_token_secret']);
@@ -140,8 +143,8 @@ class MypageController extends Controller
 
     public function callback(Request $request)
     {
-        define('TWITTER_API_KEY', 'BU3nJV0t3sQDVJWVEWjeX589p');
-		define('TWITTER_API_SECRET', 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ');
+        // define('TWITTER_API_KEY', 'BU3nJV0t3sQDVJWVEWjeX589p');
+		// define('TWITTER_API_SECRET', 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ');
         $oauth_token = $request->session()->get('oauth_token');
         $oauth_token_secret = $request->session()->get('oauth_token_secret');
         
@@ -149,7 +152,7 @@ class MypageController extends Controller
             return redirect('/');
         }
 
-        $twitter = new TwitterOAuth(TWITTER_API_KEY, TWITTER_API_SECRET);
+        $twitter = new TwitterOAuth(env('TWITTER_API_KEY'), env('TWITTER_API_SECRET'));
 
         $token = $twitter->oauth('oauth/access_token', array(
             'oauth_verifier' => $request->oauth_verifier,
@@ -159,12 +162,12 @@ class MypageController extends Controller
         $access_token = $token['oauth_token'];
         $access_token_secret = $token['oauth_token_secret'];
         
-        $twitter_user = new TwitterOAuth(
-            TWITTER_API_KEY,
-            TWITTER_API_SECRET,
-            $token['oauth_token'],
-            $token['oauth_token_secret']
-        );
+        // $twitter_user = new TwitterOAuth(
+        //     TWITTER_API_KEY,
+        //     TWITTER_API_SECRET,
+        //     $token['oauth_token'],
+        //     $token['oauth_token_secret']
+        // );
         
         $userId = Auth::user()->id;
         $token = new Token;
@@ -174,69 +177,8 @@ class MypageController extends Controller
     }
 
     public function autotweet() {
-        date_default_timezone_set('Asia/Tokyo');
         $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->get();
-        $comment1 = 
-        '
-        おはようございます。
-
-今日も一日積み上げがんばりましょうー！
-
-#今日の積み上げ
-        ';
-        $comment2 = 
-        '
-        積み上げお疲れ様です。
-一休憩入れて午後もがんばりましょう。
-
-#プログラミング
-        ';
-        $comment3 = 
-        '
-        本日も一日お疲れ様でした。
-
-#今日の積み上げ
-        ';
-        $flg1 = 1;
-        $flg2 = 1;
-        $flg3 = 1;
-
-        if(date("H:i") == '06:30' && $flg1 == 1) {
-            foreach($tokens as $token) {
-                if($token->delete_flg == '0') {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment1);
-                    sleep(180);
-                }
-            }
-            $flg1 = 0;
-            sleep(180);
-            $flg1 = 1;
-
-        }
-        if(date("H:i") == '12:30' && $flg2 == 1) {
-            foreach($tokens as $token) {
-                if($token->delete_flg == '0') {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment2);
-                    sleep(180);
-                }
-            }
-            $flg1 = 0;
-            sleep(180);
-            $flg2 = 1;
-
-        }
-        if(date("H:i") == '19:30' && $flg3 == 1) {
-            foreach($tokens as $token) {
-                if($token->delete_flg == '0') {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment3);
-                    sleep(180);
-                }
-            }
-            $flg1 = 0;
-            sleep(180);
-            $flg1 = 1;
-        }
-
-        return view('mypage.debug', ['tokens' => $tokens, 'date' => date("H:i")]);
+        AutoTweetUtil::autoFixedTweet($tokens);
+        return view('mypage.debug');
     }
 }

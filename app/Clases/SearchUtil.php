@@ -7,14 +7,12 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class SearchUtil
 {
-    public static function search($keyword)
+    public static function search($keyword, $tokens)
     {
-        $consumer_key = 'BU3nJV0t3sQDVJWVEWjeX589p';
-        $consumer_key_sercret = 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ';
-        $access_token = '3847413613-OX7PRl3lsP6sBldYG9juAwlaVT4ZmnruIz34mFp';
-        $access_token_secret = 'N6qIcYz0KGkCNS4KBzAb6otC6pQxq6JOl5rK0jnP7TjEZ';
+        $access_token = $tokens->access_token;
+        $access_token_secret = $tokens->access_token_secret;
 
-        $connection = new TwitterOAuth($consumer_key, $consumer_key_sercret, $access_token, $access_token_secret);
+        $connection = new TwitterOAuth(env('TWITTER_API_KEY'), env('TWITTER_API_SECRET'), $access_token, $access_token_secret);
 
         $tweets = $connection->get('search/tweets', ['q' => $keyword, 'count' => '10']);
         return $tweets;
