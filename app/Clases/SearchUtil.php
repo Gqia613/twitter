@@ -12,7 +12,7 @@ class SearchUtil
         $access_token = $tokens->access_token;
         $access_token_secret = $tokens->access_token_secret;
 
-        $connection = new TwitterOAuth(env('TWITTER_API_KEY'), env('TWITTER_API_SECRET'), $access_token, $access_token_secret);
+        $connection = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'), $access_token, $access_token_secret);
 
         $tweets = $connection->get('search/tweets', ['q' => $keyword, 'count' => '10']);
         return $tweets;

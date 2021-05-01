@@ -123,14 +123,14 @@ class MypageController extends Controller
 
     public function autoRes(Request $request)
     {
-		define('TWITTER_API_KEY', env('TWITTER_API_KEY'));
-		define('TWITTER_API_SECRET', env('TWITTER_API_SECRET'));
-		// define('CALLBACK_URL', 'http://localhost:8000/callback');
-		define('CALLBACK_URL', env('CALLBACK_URL'));
+		// define('TWITTER_API_KEY', env('TWITTER_API_KEY'));
+		// define('TWITTER_API_SECRET', env('TWITTER_API_SECRET'));
+		// // define('CALLBACK_URL', 'http://localhost:8000/callback');
+		// define('CALLBACK_URL', env('CALLBACK_URL'));
 
 		//TwitterOAuthのインスタンスを生成し、Twitterからリクエストトークンを取得する
-		$twitter_connect = new TwitterOAuth(env('TWITTER_API_KEY'), env('TWITTER_API_SECRET'));
-		$request_token = $twitter_connect->oauth('oauth/request_token', ['oauth_callback' => env('CALLBACK_URL')]);
+		$twitter_connect = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'));
+		$request_token = $twitter_connect->oauth('oauth/request_token', ['oauth_callback' => config('twitter.callback_url')]);
         
 		$request->session()->put('oauth_token', $request_token['oauth_token']);
 		$request->session()->put('oauth_token_secret', $request_token['oauth_token_secret']);
