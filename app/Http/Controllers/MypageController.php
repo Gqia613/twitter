@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Auth;
 
 class MypageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index(Request $request)
     {
         // ログインしていなかったら、Login画面を表示
@@ -45,39 +50,22 @@ class MypageController extends Controller
         return view('mypage.tweeted', ['items' => $items]);  
     }
 
-    public function info()
-    {
-        return view('mypage.info');
-    }
-
     public function tweet()
     {
-        // $userId = 1;
         $userId = Auth::id();
-        // $userId = Auth::user()->id;
         $data = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->first();
-        $content = $data['content'];
-        $reservation_time = $data['reservation_time'];
 
         date_default_timezone_set('Asia/Tokyo');
         if(!empty($data)) {
-
-            if(strtotime(date("Y/m/d H:i")) >= strtotime($reservation_time)) {
-                $token = Token::select(['access_token', 'access_token_secret'])->where('user_id', $userId)->first();
-                $access_token = $token['access_token'];
-                $access_token_secret = $token['access_token_secret'];
-                // TweetUtil::tweet($token->access_token, $token->access_token_secret, $data->content);
-                TweetUtil::tweet($access_token, $access_token_secret, $content);
+            if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
+                $token = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
+                TweetUtil::tweet($token, $data['content']);
                 
-                $content = Content::find($data['id']); 
+                $content = Content::find($data['id']);
                 $form = ['del_flag' => 1];
                 unset($form['_token']);
                 $content->fill($form)->save();
-            }else {
-                return view('mypage.index');
             }
-        }else {
-            return view('mypage.search');
         }
     }
 
@@ -115,7 +103,7 @@ class MypageController extends Controller
         $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
         FavoriteUtil::favorite($request->keyword, $request->num, $tokens);
         
-        return redirect('/');
+        return view('mypage.favorite');
     }
 
     public function auto()
@@ -125,11 +113,6 @@ class MypageController extends Controller
 
     public function autoRes(Request $request)
     {
-		// define('TWITTER_API_KEY', env('TWITTER_API_KEY'));
-		// define('TWITTER_API_SECRET', env('TWITTER_API_SECRET'));
-		// // define('CALLBACK_URL', 'http://localhost:8000/callback');
-		// define('CALLBACK_URL', env('CALLBACK_URL'));
-
 		//TwitterOAuthのインスタンスを生成し、Twitterからリクエストトークンを取得する
 		$twitter_connect = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'));
 		$request_token = $twitter_connect->oauth('oauth/request_token', ['oauth_callback' => config('twitter.callback_url')]);
@@ -145,8 +128,6 @@ class MypageController extends Controller
 
     public function callback(Request $request)
     {
-        // define('TWITTER_API_KEY', 'BU3nJV0t3sQDVJWVEWjeX589p');
-		// define('TWITTER_API_SECRET', 'Z8M7s5sdenckMfKmNigL78CjMBHAedDKm7djQBHamvqLEH3deQ');
         $oauth_token = $request->session()->get('oauth_token');
         $oauth_token_secret = $request->session()->get('oauth_token_secret');
         
@@ -156,31 +137,28 @@ class MypageController extends Controller
 
         $twitter = new TwitterOAuth(config('twitter.twitter_api_key'), config('twitter.twitter_api_secret'));
 
-        $token = $twitter->oauth('oauth/access_token', array(
-            'oauth_verifier' => $request->oauth_verifier,
-            'oauth_token' => $request->oauth_token,
-        ));
+        // 「連携アプリを認証」をクリックして帰ってきた時
+        if(isset( $_GET["oauth_token"]) && isset($_GET["oauth_verifier"])) {
+            $token = $twitter->oauth('oauth/access_token', array(
+                'oauth_verifier' => $request->oauth_verifier,
+                'oauth_token' => $request->oauth_token,
+            ));
+            $access_token = $token['oauth_token'];
+            $access_token_secret = $token['oauth_token_secret'];
 
-        $access_token = $token['oauth_token'];
-        $access_token_secret = $token['oauth_token_secret'];
-        
-        // $twitter_user = new TwitterOAuth(
-        //     TWITTER_API_KEY,
-        //     TWITTER_API_SECRET,
-        //     $token['oauth_token'],
-        //     $token['oauth_token_secret']
-        // );
-        
-        $userId = Auth::user()->id;
-        $token = new Token;
-        $token->fill(['user_id' => $userId, 'access_token' => $access_token, 'access_token_secret' => $access_token_secret, 'delete_flg' => 0])->save();
+            $userId = Auth::user()->id;
+            $token = new Token;
+            $token->fill(['user_id' => $userId, 'access_token' => $access_token, 'access_token_secret' => $access_token_secret, 'delete_flg' => 0])->save();
 
-        return redirect('/');
+            return redirect('/');
+        // 「キャンセル」をクリックして帰ってきた時
+        } elseif (isset($_GET["denied"])) {
+            return redirect('/');
+        }
     }
 
     public function autotweet() {
         $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->get();
         AutoTweetUtil::autoFixedTweet($tokens);
-        return view('mypage.debug');
     }
 }

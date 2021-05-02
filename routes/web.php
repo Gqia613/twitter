@@ -5,8 +5,6 @@ Route::post('/', 'MypageController@add');
 
 Route::get('/tweeted', 'MypageController@tweeted');
 
-Route::get('/info', 'MypageController@info');
-
 Route::get('/tweet', 'MypageController@tweet');
 
 Route::post('/delete', 'MypageController@delete');
@@ -27,6 +25,6 @@ Route::get('/autotweet', 'MypageController@autotweet');
 
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
