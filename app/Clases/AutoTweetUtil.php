@@ -8,7 +8,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 class AutoTweetUtil
 {
 
-	public static function autoFixedTweet(array $tokens)
+	public static function autoFixedTweet($tokens)
 	{
         date_default_timezone_set('Asia/Tokyo');
 
