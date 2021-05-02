@@ -57,7 +57,7 @@ class MypageController extends Controller
 
         date_default_timezone_set('Asia/Tokyo');
         if(!empty($data)) {
-            if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
+            // if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
                 $token = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
                 TweetUtil::tweet($token, $data['content']);
                 
@@ -65,7 +65,7 @@ class MypageController extends Controller
                 $form = ['del_flag' => 1];
                 unset($form['_token']);
                 $content->fill($form)->save();
-            }
+            // }
         }
     }
 
