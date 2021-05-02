@@ -23,11 +23,6 @@ class MypageController extends Controller
     
     public function index(Request $request)
     {
-        // ログインしていなかったら、Login画面を表示
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
         date_default_timezone_set('Asia/Tokyo');
         $userId = Auth::id();
         $items = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->get();
@@ -51,24 +46,7 @@ class MypageController extends Controller
         return view('mypage.tweeted', ['items' => $items]);  
     }
 
-    public function tweet()
-    {
-        $userId = Auth::id();
-        $data = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->first();
 
-        date_default_timezone_set('Asia/Tokyo');
-        if(!empty($data)) {
-            if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
-                $token = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
-                TweetUtil::tweet($token, $data['content']);
-                
-                $content = Content::find($data['id']);
-                $form = ['del_flag' => 1];
-                unset($form['_token']);
-                $content->fill($form)->save();
-            }
-        }
-    }
 
     public function delete(Request $request)
     {
@@ -156,10 +134,5 @@ class MypageController extends Controller
         } elseif (isset($_GET["denied"])) {
             return redirect('/');
         }
-    }
-
-    public function autotweet() {
-        $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->get();
-        AutoTweetUtil::autoFixedTweet($tokens);
     }
 }

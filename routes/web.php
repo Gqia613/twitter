@@ -5,7 +5,7 @@ Route::post('/', 'MypageController@add');
 
 Route::get('/tweeted', 'MypageController@tweeted');
 
-Route::get('/tweet', 'MypageController@tweet');
+Route::get('/tweet', 'AutoController@tweet');
 
 Route::post('/delete', 'MypageController@delete');
 
@@ -20,7 +20,7 @@ Route::post('/autofallow', 'MypageController@autoRes');
 
 Route::get('/callback', 'MypageController@callback');
 
-Route::get('/autotweet', 'MypageController@autotweet');
+Route::get('/autotweet', 'AutoController@autotweet');
 
 
 
