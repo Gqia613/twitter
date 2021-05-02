@@ -7,7 +7,7 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 
 class TweetUtil
 {
-    public static function tweet(array $token = null,  string $comment = null)
+    public static function tweet($token, $comment)
     {
         $access_token = $token->access_token;
         $access_token_secret = $token->access_token_secret;
