@@ -20,9 +20,10 @@
         @csrf
     </form>
 </div>
-    <h1>@yield('title')</h1>
     @yield('menu')
 
+    <h1>@yield('title')</h1>
+    
     @yield('main')
 
     @yield('content')

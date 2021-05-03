@@ -20,7 +20,7 @@
 
                     <ul class="right hide-on-med-and-down">
                         <li><a href="/tweeted" class="grey-text text-lighten-3">投稿済み一覧</a></li>
-                        <li><a href="/search" class="grey-text text-lighten-3">検索</a></li>
+                        <li><a href="/search" class="grey-text text-lighten-3">Tweet検索</a></li>
                         <li><a href="/favorite" class="grey-text text-lighten-3">いいねする</a></li>
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
 
         <div class="menu">
             <li><a href="/tweeted">投稿済み一覧</a></li>
-            <li><a href="/search">検索</a></li>
+            <li><a href="/search">Tweet検索</a></li>
             <li><a href="/favorite">いいねする</a></li>
         </div>
     </ul>
