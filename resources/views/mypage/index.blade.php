@@ -10,7 +10,7 @@
     <a href="/autofallow">自動化する</a>
     @endempty
 @endsection
-
+{{ $token }}
 @section('main')
     @error('reservation_time')
         <p>{{$message}}</p>
