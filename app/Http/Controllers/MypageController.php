@@ -26,7 +26,8 @@ class MypageController extends Controller
         date_default_timezone_set('Asia/Tokyo');
         $userId = Auth::id();
         $items = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->get();
-        return view('mypage.index', ['items' => $items, 'userId' => $userId]);
+        $token = Token::where('user_id', $userId)->where('delete_flg', 0)->first();
+        return view('mypage.index', ['items' => $items, 'userId' => $userId, 'token', $token]);
     }
 
     public function add(Request $request)

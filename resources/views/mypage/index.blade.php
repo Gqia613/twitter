@@ -6,7 +6,9 @@
     <a href="/tweeted">投稿済み一覧</a>
     <a href="/search">検索</a>
     <a href="/favorite">いいねする</a>
+    @empty($token)
     <a href="/autofallow">自動化する</a>
+    @endempty
 @endsection
 
 @section('main')
