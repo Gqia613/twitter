@@ -25,6 +25,6 @@ Route::get('/autotweet', 'AutoController@autotweet');
 
 
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
