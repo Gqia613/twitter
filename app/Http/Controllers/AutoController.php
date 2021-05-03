@@ -8,6 +8,7 @@ use App\Clases\AutoTweetUtil;
 use App\Models\Content;
 use App\Models\Token;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AutoController extends Controller
 {
@@ -15,13 +16,11 @@ class AutoController extends Controller
     {
         $userId = Auth::id();
         $data = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->first();
-$log = Logger::getInstance();
         date_default_timezone_set('Asia/Tokyo');
         if(!empty($data)) {
-            
-$log->debug('１通った');
+Log::debug('1通った');
             if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
-$log->debug('２通った');
+Log::debug('2通った');
                 $token = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
                 TweetUtil::tweet($token, $data['content']);
                 
