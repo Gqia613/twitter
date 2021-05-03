@@ -15,10 +15,13 @@ class AutoController extends Controller
     {
         $userId = Auth::id();
         $data = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->first();
-
+$log = Logger::getInstance();
         date_default_timezone_set('Asia/Tokyo');
         if(!empty($data)) {
+            
+$log->debug('１通った');
             if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
+$log->debug('２通った');
                 $token = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
                 TweetUtil::tweet($token, $data['content']);
                 
