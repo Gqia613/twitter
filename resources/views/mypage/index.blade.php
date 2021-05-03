@@ -7,45 +7,6 @@
     <a href="/autofallow">自動化する</a>
     @endsection
 @else
-    @section('menu')
-    <div class=" navbar-fixed">
-        <nav class="nav-wraper  deep-purple">
-            <div class="cotainer">
-                <!--ハンバーガーメニューの開くアイコン-->
-                <a href="#" class="sidenav-trigger right" data-target="mobile-links">
-                    <i class="material-icons">menu</i>
-                </a>
-
-                <div class="menu">
-
-                    <ul class="right hide-on-med-and-down">
-                        <li><a href="/tweeted" class="grey-text text-lighten-3">投稿済み一覧</a></li>
-                        <li><a href="/search" class="grey-text text-lighten-3">Tweet検索</a></li>
-                        <li><a href="/favorite" class="grey-text text-lighten-3">いいねする</a></li>
-                    </ul>
-                </div>
-
-            </div>
-        </nav>
-    </div>
-
-    <ul class="sidenav" id="mobile-links">
-        <!--ハンバーガーメニューの閉じるアイコン-->
-        <a href="#" class="sidenav-close " data-target="mobile-links">
-            <i class="material-icons close-icon">close</i>
-        </a>
-
-        <div class="menu">
-            <li><a href="/tweeted">投稿済み一覧</a></li>
-            <li><a href="/search">Tweet検索</a></li>
-            <li><a href="/favorite">いいねする</a></li>
-        </div>
-    </ul>
-        <!-- <a href="/tweeted">投稿済み一覧</a>
-        <a href="/search">検索</a>
-        <a href="/favorite">いいねする</a> -->
-    @endsection
-
     @section('main')
         @error('reservation_time')
             <p>{{$message}}</p>
@@ -53,7 +14,7 @@
         @error('content')
             <p>{{$message}}</p>
         @enderror
-        <table>
+        <!-- <table>
         <form action="/" method="post">
             @csrf
             @isset($userId)
@@ -76,7 +37,22 @@
                 <td><input class="button" type="submit" value="設定する"></td>
             </tr>
         </form>
-        </table>
+        </table> -->
+        <div class="row">
+            <form action="/" method="post">
+                @csrf
+                @isset($userId)
+                <input type="hidden" name="user_id" value="{{$userId}}">
+                @endisset
+                <input type="hidden" name="del_flag" value="0">
+                <input type="datetime-local" name="reservation_time" step="60" value="{{old('reservation_time')}}">
+                <div class="input-field col s12">
+                    <textarea id="textarea2" class="materialize-textarea" name="content" value="{{old('content')}}" data-length="120"></textarea>
+                    <label for="textarea2">Textarea</label>
+                </div>
+                <input class="button" type="submit" value="設定する">
+            </form>
+        </div>
     @endsection
 
     @section('content')

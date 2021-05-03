@@ -2,18 +2,25 @@
 
 @section('title', 'ツイート検索')
 
-@section('menu')
-    <a href="/">マイページに戻る</a>
-@endsection
-
 @section('content')
-    <form action="/search" method="post">
+    <!-- <form action="/search" method="post">
         @csrf
         <input type="text" name="keyword">
         <input type="submit" value="検索">
-    </form>
+    </form> -->
 
-
+    <div class="row">
+        <form class="col s12" action="/search" method="post">
+            @csrf
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="input_text" type="text" name="keyword">
+                    <label for="input_text">キーワード</label>
+                </div>
+            </div>
+            <input type="submit" value="検索">
+        </form>
+    </div>
 
     <section>
     @isset($tweets)

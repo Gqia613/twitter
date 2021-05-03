@@ -2,10 +2,6 @@
 
 @section('title', '投稿済み一覧')
 
-@section('menu')
-    <a href="/">マイページに戻る</a>
-@endsection
-
 @section('content')
     <section>
         @foreach($items as $item)
