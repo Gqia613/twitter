@@ -18,7 +18,7 @@ class AutoController extends Controller
         $datum = Content::where('del_flag', 0)->orderBy('reservation_time', 'asc')->get();
         date_default_timezone_set('Asia/Tokyo');
 Log::debug('0通った');
-        if(!empty($data)) {
+        if(!empty($datum)) {
 Log::debug('1通った');
             foreach($datum as $data) {
                 if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
