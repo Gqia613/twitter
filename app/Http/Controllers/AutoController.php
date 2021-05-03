@@ -15,20 +15,22 @@ class AutoController extends Controller
     public function tweet()
     {
         $userId = Auth::id();
-        $data = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->first();
+        $datum = Content::where('del_flag', 0)->orderBy('reservation_time', 'asc')->get();
         date_default_timezone_set('Asia/Tokyo');
 Log::debug('0通った');
         if(!empty($data)) {
 Log::debug('1通った');
-            if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
+            foreach($datum as $data) {
+                if(strtotime(date("Y/m/d H:i")) >= strtotime($data['reservation_time'])) {
 Log::debug('2通った');
-                $token = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
-                TweetUtil::tweet($token, $data['content']);
-                
-                $content = Content::find($data['id']);
-                $form = ['del_flag' => 1];
-                unset($form['_token']);
-                $content->fill($form)->save();
+                    $token = Token::select(['access_token', 'access_token_secret'])->where('user_id', $data['user_id'])->first();
+                    TweetUtil::tweet($token, $data['content']);
+                    
+                    $content = Content::find($data['id']);
+                    $form = ['del_flag' => 1];
+                    unset($form['_token']);
+                    $content->fill($form)->save();
+                }
             }
         }
     }
