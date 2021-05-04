@@ -40,7 +40,7 @@
         <section>
         @if(isset($items))
             @foreach($items as $item)
-            <div class="contents">
+            <div class="row card blue-grey darken-1">
                 @php            
                     $time1 = mb_substr($item->reservation_time , 0, 10);
                     $year = mb_substr($time1 , 0, 4);
@@ -49,14 +49,20 @@
                     $time2 = mb_substr($item->reservation_time , 11, 5);
                     $total = $year . '/' . $month . '/' . $day . ' ' . $time2;   
                 @endphp
-                <p class="reservation_time">予約時間：{{$total}}</p>
-                <h3>投稿内容</h3>
-                <p class="content">{{$item->content}}</p>
-                <form action="/delete" method="post">
-                    @csrf
-                    <input type="hidden" name="id" value="{{$item->id}}">
-                    <input class="button" type="submit" value="取消">
-                </form>
+                <div class="col s12 m6 card-content white-text deep-purple">
+                    <p class="reservation_time">予約時間：{{$total}}</p>
+                    <span class="card-title">投稿内容</span>
+                    <p>{{$item->content}}</p>
+                </div>
+                <div class="col s12 m6 card-action deep-purple">
+                    <form action="/delete" method="post">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$item->id}}">
+                        <button class="col s6 offset-s6 btn waves-effect waves-light deep-purple lighten-2" type="submit">
+                            <i class="material-icons small">delete_forever</i>
+                        </button>
+                    </form>
+                </div>
             </div>
             @endforeach
         @endif
