@@ -12,14 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
-<!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-       
-    </a>
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-    </form>
-</div> -->
     <div class=" navbar-fixed">
         <nav class="nav-wraper  deep-purple">
             <div class="cotainer">
@@ -57,7 +49,7 @@
         </a>
 
         <div class="menu">
-            <li><a href="/">マイページに戻る</a></li>
+            <li><a href="/">トップに戻る</a></li>
             <li><a href="/tweeted">投稿済み一覧</a></li>
             <li><a href="/search">Tweet検索</a></li>
             <li><a href="/favorite">いいねする</a></li>
@@ -72,7 +64,7 @@
         </div>
     </ul>
 
-    <h1>@yield('title')</h1>
+    <h4>@yield('title')</h4>
 
     @yield('main')
 

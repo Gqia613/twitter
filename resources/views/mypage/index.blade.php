@@ -1,10 +1,10 @@
 @extends('layouts.index')
 
-@section('title', 'ホーム')
+@section('title', 'ツイッター')
 
 @empty($token)
     @section('menu')
-    <a href="/autofallow">自動化する</a>
+    <a href="/autofallow">アカウント連携</a>
     @endsection
 @else
     @section('main')
@@ -14,30 +14,6 @@
         @error('content')
             <p>{{$message}}</p>
         @enderror
-        <!-- <table>
-        <form action="/" method="post">
-            @csrf
-            @isset($userId)
-            <input type="hidden" name="user_id" value="{{$userId}}">
-            @endisset
-            <input type="hidden" name="del_flag" value="0">
-            <tr>
-                <th>日付</th>
-            </tr>
-            <tr>
-                <td><input type="datetime-local" name="reservation_time" step="60" value="{{old('reservation_time')}}"></td>
-            </tr>
-            <tr>
-                <th>投稿内容</th>
-            </tr>
-            <tr>
-                <td><textarea cols="30" rows="7" name="content" value="{{old('content')}}"></textarea></td>
-            </tr>
-            <tr>
-                <td><input class="button" type="submit" value="設定する"></td>
-            </tr>
-        </form>
-        </table> -->
         <div class="row">
             <form action="/" method="post">
                 @csrf
@@ -45,12 +21,17 @@
                 <input type="hidden" name="user_id" value="{{$userId}}">
                 @endisset
                 <input type="hidden" name="del_flag" value="0">
-                <input type="datetime-local" name="reservation_time" step="60" value="{{old('reservation_time')}}">
+                <div class="input-field col s12">
+                    <input type="datetime-local" name="reservation_time" step="60" value="{{old('reservation_time')}}">
+                </div>
                 <div class="input-field col s12">
                     <textarea id="textarea2" class="materialize-textarea" name="content" value="{{old('content')}}" data-length="120"></textarea>
-                    <label for="textarea2">Textarea</label>
+                    <label for="textarea2">テキストエリア</label>
                 </div>
-                <input class="button" type="submit" value="設定する">
+                <button class="btn waves-effect waves-light deep-purple" type="submit" name="action">設定
+                    <i class="material-icons right">send</i>
+                </button>
+                <!-- <input class="button" type="submit" value="設定する"> -->
             </form>
         </div>
     @endsection

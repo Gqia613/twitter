@@ -3,22 +3,19 @@
 @section('title', 'ツイート検索')
 
 @section('content')
-    <!-- <form action="/search" method="post">
-        @csrf
-        <input type="text" name="keyword">
-        <input type="submit" value="検索">
-    </form> -->
-
     <div class="row">
         <form class="col s12" action="/search" method="post">
             @csrf
             <div class="row">
-                <div class="input-field col s6">
+                <div class="input-field col s12">
                     <input id="input_text" type="text" name="keyword">
                     <label for="input_text">キーワード</label>
                 </div>
             </div>
-            <input type="submit" value="検索">
+            <button class="btn waves-effect waves-light deep-purple" type="submit" name="action">検索
+                <i class="material-icons right">send</i>
+            </button>
+            <!-- <input type="submit" value="検索"> -->
         </form>
     </div>
 
