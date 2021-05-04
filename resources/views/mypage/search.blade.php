@@ -12,23 +12,23 @@
                     <label for="input_text">キーワード</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light deep-purple" type="submit">検索
+            <button class="col s4 offset-s4 btn waves-effect waves-light deep-purple" type="submit">検索
                 <i class="material-icons right">send</i>
             </button>
-            <!-- <input type="submit" value="検索"> -->
         </form>
     </div>
 
     <section>
     @isset($tweets)
         @foreach($tweets->statuses as $tweet)
-        <div class="contents">
-            <p class="reservation_time">ユーザー名：{{$tweet->user->name}}</p>
-            <h3>投稿内容</h3>
-            <p class="content">{{$tweet->text}}</p>
+        <div class="row card blue-grey darken-1">
+            <div class="col s12 m6 card-content white-text deep-purple">
+                <p>ユーザー名：{{$tweet->user->name}}</p>
+                <span class="card-title">投稿内容</span>
+                <p>{{$tweet->text}}</p>
+            </div>
         </div>
         @endforeach
-
     @endisset
     </section>
 @endsection
