@@ -28,10 +28,9 @@
                     <textarea id="textarea2" class="materialize-textarea" name="content" value="{{old('content')}}" data-length="120"></textarea>
                     <label for="textarea2">テキストエリア</label>
                 </div>
-                <button class="btn waves-effect waves-light deep-purple" type="submit">設定
+                <button class="col s4 offset-s4 btn waves-effect waves-light deep-purple" type="submit">設定
                     <i class="material-icons right">send</i>
                 </button>
-                <!-- <input class="button" type="submit" value="設定する"> -->
             </form>
         </div>
     @endsection
