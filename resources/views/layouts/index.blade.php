@@ -25,7 +25,7 @@
                     <ul class="right hide-on-med-and-down">
                         <li><a href="/" class="grey-text text-lighten-3">マイページに戻る</a></li>
                         <li><a href="/tweeted" class="grey-text text-lighten-3">投稿済み一覧</a></li>
-                        <li><a href="/search" class="grey-text text-lighten-3">Tweet検索</a></li>
+                        <li><a href="/search" class="grey-text text-lighten-3">ツイート検索</a></li>
                         <li><a href="/favorite" class="grey-text text-lighten-3">いいねする</a></li>
                         <li>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">

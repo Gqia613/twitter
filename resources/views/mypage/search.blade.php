@@ -12,7 +12,7 @@
                     <label for="input_text">キーワード</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light deep-purple" type="submit" name="action">検索
+            <button class="btn waves-effect waves-light deep-purple" type="submit">検索
                 <i class="material-icons right">send</i>
             </button>
             <!-- <input type="submit" value="検索"> -->

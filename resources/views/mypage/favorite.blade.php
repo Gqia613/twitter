@@ -16,7 +16,7 @@
                     <label for="input_text">ツイート数</label>
                 </div>
             </div>
-            <button class="btn waves-effect waves-light deep-purple" type="submit" name="action">いいねする
+            <button class="btn waves-effect waves-light deep-purple" type="submit">いいねする
                 <i class="material-icons right">send</i>
             </button>
             <!-- <input type="submit" value="いいねする"> -->
