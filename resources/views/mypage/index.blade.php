@@ -9,10 +9,10 @@
 @else
     @section('main')
         @error('reservation_time')
-            <p>{{$message}}</p>
+            <p class="center">{{$message}}</p>
         @enderror
         @error('content')
-            <p>{{$message}}</p>
+            <p class="center">{{$message}}</p>
         @enderror
         <div class="row">
             <form action="/" method="post">

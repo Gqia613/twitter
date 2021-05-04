@@ -64,7 +64,7 @@
         </div>
     </ul>
 
-    <h4>@yield('title')</h4>
+    <h4 class="center">@yield('title')</h4>
 
     @yield('main')
 
