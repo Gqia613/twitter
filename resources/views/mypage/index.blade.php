@@ -8,6 +8,9 @@
     @endsection
 @else
     @section('main')
+        @empty($error)
+
+        @else
         <div class="card-panel red darken-2">
             <ul>
                 @error('reservation_time')
@@ -18,6 +21,7 @@
                 @enderror
             </ul>
         </div>
+        @endempty
         <div class="row">
             <form action="/" method="post">
                 @csrf

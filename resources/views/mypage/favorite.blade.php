@@ -3,6 +3,9 @@
 @section('title', 'いいね')
 
 @section('content')
+    @empty($error)
+
+    @else
     <div class="card-panel red darken-2">
         <ul>
             @error('keyword')
@@ -13,6 +16,7 @@
             @enderror
         </ul>
     </div>
+    @endempty
     <div class="row">
         <form class="col s12" action="/favorite" method="post">
             @csrf
