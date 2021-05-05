@@ -9,6 +9,7 @@ use App\Clases\SearchUtil;
 use App\Clases\FavoriteUtil;
 use App\Clases\AutoFallowUtil;
 use App\Clases\AutoTweetUtil;
+use App\Clases\CooperationCheckUtil;
 use App\Models\Content;
 use App\Models\Token;
 use Abraham\TwitterOAuth\TwitterOAuth;
@@ -20,6 +21,7 @@ class MypageController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        CooperationCheckUtil::check(Auth::id());
     }
     
     public function index(Request $request)
@@ -123,13 +125,7 @@ class MypageController extends Controller
 
     public function auto()
     {
-        $userId = Auth::id();
-        $tokens = Token::select(['access_token', 'access_token_secret'])->where('user_id', $userId)->where('delete_flg', 0)->first();
-        if(empty($tokens)) {
-            return view('mypage.autofallow');
-        } else {
-            return redirect('/');
-        }
+        return view('mypage.autofallow');
     }
 
     public function autoRes(Request $request)

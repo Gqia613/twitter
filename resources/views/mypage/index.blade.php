@@ -3,9 +3,7 @@
 @section('title', 'ツイッター')
 
 @empty($token)
-    @section('menu')
     <a href="/autofallow">アカウント連携</a>
-    @endsection
 @else
     @section('main')
         @empty($errors->all())
