@@ -54,6 +54,7 @@
             <li><a href="/search"><i class="material-icons">search</i>Tweet検索</a></li>
             <li><a href="/favorite"><i class="material-icons">favorite</i>いいねする</a></li>
             <li>
+            <i class="material-icons">directions_run</i>
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 {{ __('ログアウト') }}
             </a>
