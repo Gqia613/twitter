@@ -21,7 +21,12 @@ class MypageController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        CooperationCheckUtil::check(Auth::id());
+        $checkToken = CooperationCheckUtil::check(Auth::id());
+        if(empty($checkToken)) {
+            return redirect('/autofallow');
+        } else {
+            return redirect('/search');
+        }
     }
     
     public function index(Request $request)
