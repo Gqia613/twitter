@@ -96,11 +96,29 @@ class MypageController extends Controller
 
     public function favoriteRes(Request $request)
     {
-        $userId = Auth::id();
-        $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
-        FavoriteUtil::favorite($request->keyword, $request->num, $tokens);
-        
-        return view('mypage.favorite');
+        $rules = [
+            'keyword' => 'required',
+            'num' => 'required',
+        ];
+
+        $message = [
+            'keyword.required' => 'キーワードを入力して下さい。',
+            'num.required' => 'ツイート数を入力して下さい。',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        if ($validator->fails()) {
+            return redirect('/favorite')
+            ->withErrors($validator)
+            ->withInput();
+        } else {  
+            $userId = Auth::id();
+            $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
+            FavoriteUtil::favorite($request->keyword, $request->num, $tokens);
+            
+            return view('mypage.favorite');
+        }
     }
 
     public function auto()
