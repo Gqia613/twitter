@@ -123,7 +123,13 @@ class MypageController extends Controller
 
     public function auto()
     {
-        return view('mypage.autofallow');
+        $userId = Auth::id();
+        $tokens = Token::select(['access_token', 'access_token_secret'])->where('user_id', $userId)->where('delete_flg', 0)->first();
+        if(empty($tokens)) {
+            return view('mypage.autofallow');
+        } else {
+            return redirect('/');
+        }
     }
 
     public function autoRes(Request $request)
