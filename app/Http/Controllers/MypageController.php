@@ -13,6 +13,7 @@ use App\Models\Content;
 use App\Models\Token;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class MypageController extends Controller
 {
