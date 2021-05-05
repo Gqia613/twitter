@@ -3,12 +3,16 @@
 @section('title', 'いいね')
 
 @section('content')
-    @error('keyword')
-        <p class="center">{{$message}}</p>
-    @enderror
-    @error('num')
-        <p class="center">{{$message}}</p>
-    @enderror
+    <div class="card-panel red darken-2">
+        <ul>
+            @error('keyword')
+            <li class="white-text">{{$message}}</li>
+            @enderror
+            @error('num')
+            <li class="white-text">{{$message}}</li>
+            @enderror
+        </ul>
+    </div>
     <div class="row">
         <form class="col s12" action="/favorite" method="post">
             @csrf

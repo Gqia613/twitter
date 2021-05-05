@@ -8,12 +8,16 @@
     @endsection
 @else
     @section('main')
-        @error('reservation_time')
-            <p class="center">{{$message}}</p>
-        @enderror
-        @error('content')
-            <p class="center">{{$message}}</p>
-        @enderror
+        <div class="card-panel red darken-2">
+            <ul>
+                @error('reservation_time')
+                <li class="white-text">{{$message}}</li>
+                @enderror
+                @error('content')
+                <li class="white-text">{{$message}}</li>
+                @enderror
+            </ul>
+        </div>
         <div class="row">
             <form action="/" method="post">
                 @csrf
@@ -39,7 +43,7 @@
         <section>
         @if(isset($items))
             @foreach($items as $item)
-            <div class="row card blue-grey darken-1">
+            <div class="row card deep-purple">
                 @php            
                     $time1 = mb_substr($item->reservation_time , 0, 10);
                     $year = mb_substr($time1 , 0, 4);
@@ -48,16 +52,16 @@
                     $time2 = mb_substr($item->reservation_time , 11, 5);
                     $total = $year . '/' . $month . '/' . $day . ' ' . $time2;   
                 @endphp
-                <div class="col s12 m6 card-content white-text deep-purple">
-                    <p class="reservation_time">予約時間：{{$total}}</p>
+                <div class="col s12 m12 card-content white-text deep-purple">
+                    <p>予約時間：{{$total}}</p>
                     <span class="card-title">投稿内容</span>
                     <p>{{$item->content}}</p>
                 </div>
-                <div class="col s12 m6 card-action deep-purple">
+                <div class="col s12 m12 card-action deep-purple">
                     <form action="/delete" method="post">
                         @csrf
                         <input type="hidden" name="id" value="{{$item->id}}">
-                        <button class="col s6 offset-s6 btn waves-effect waves-light deep-purple lighten-2" type="submit">
+                        <button class="col s6 offset-s6 m6 offset-m6 btn waves-effect waves-light deep-purple lighten-2" type="submit">
                             <i class="material-icons small">delete_forever</i>
                         </button>
                     </form>

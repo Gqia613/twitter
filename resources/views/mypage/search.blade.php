@@ -3,9 +3,13 @@
 @section('title', 'ツイート検索')
 
 @section('content')
-    @error('keyword')
-        <p class="center">{{$message}}</p>
-    @enderror
+    <div class="card-panel red darken-2">
+        <ul>
+            @error('keyword')
+            <li class="white-text">{{$message}}</li>
+            @enderror
+        </ul>
+    </div>
     <div class="row">
         <form class="col s12" action="/search" method="post">
             @csrf
@@ -24,8 +28,8 @@
     <section>
     @isset($tweets)
         @foreach($tweets->statuses as $tweet)
-        <div class="row card blue-grey darken-1">
-            <div class="col s12 m6 card-content white-text deep-purple">
+        <div class="row card deep-purple">
+            <div class="col s12 m12 card-content white-text deep-purple">
                 <p>ユーザー名：{{$tweet->user->name}}</p>
                 <span class="card-title">投稿内容</span>
                 <p>{{$tweet->text}}</p>

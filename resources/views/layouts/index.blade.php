@@ -49,10 +49,10 @@
         </a>
 
         <div class="menu">
-            <li><a href="/">トップに戻る</a></li>
-            <li><a href="/tweeted">投稿済み一覧</a></li>
-            <li><a href="/search">Tweet検索</a></li>
-            <li><a href="/favorite">いいねする</a></li>
+            <li><a href="/"><i class="material-icons">home</i>トップに戻る</a></li>
+            <li><a href="/tweeted"><i class="material-icons">history</i>投稿済み一覧</a></li>
+            <li><a href="/search"><i class="material-icons">search</i>Tweet検索</a></li>
+            <li><a href="/favorite"><i class="material-icons">favorite</i>いいねする</a></li>
             <li>
             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                 {{ __('ログアウト') }}
