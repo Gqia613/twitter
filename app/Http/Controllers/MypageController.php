@@ -20,23 +20,19 @@ class MypageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
         $checkToken = CooperationCheckUtil::check(Auth::id());
         if(empty($checkToken)) {
             return redirect('/autofallow');
-        } else {
-            return redirect('/search');
         }
+        $this->middleware('auth');
     }
     
     public function index(Request $request)
     {
-        $checkToken = CooperationCheckUtil::check(Auth::id());        
-        if(empty($checkToken)) {
-            return redirect('/autofallow');
-        } else {
-            return redirect('/search');
-        }
+        // $checkToken = CooperationCheckUtil::check(Auth::id());        
+        // if(empty($checkToken)) {
+        //     return redirect('/autofallow');
+        // }
         date_default_timezone_set('Asia/Tokyo');
         $userId = Auth::id();
         $items = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->get();
