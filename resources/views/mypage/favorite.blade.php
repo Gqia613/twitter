@@ -3,7 +3,7 @@
 @section('title', 'いいね')
 
 @section('content')
-    @empty($error)
+    @empty($errors)
 
     @else
     <div class="card-panel red darken-2">

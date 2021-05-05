@@ -8,7 +8,7 @@
     @endsection
 @else
     @section('main')
-        @empty($error)
+        @empty($errors)
 
         @else
         <div class="card-panel red darken-2">
