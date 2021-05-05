@@ -3,7 +3,7 @@
 @section('title', 'ツイート検索')
 
 @section('content')
-    @empty($errors)
+    @empty($errors->all())
 
     @else
     <div class="card-panel red darken-2">
