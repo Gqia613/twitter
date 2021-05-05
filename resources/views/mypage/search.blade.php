@@ -11,7 +11,7 @@
             @csrf
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="input_text" type="text" name="keyword">
+                    <input id="input_text" type="text" name="keyword" value="{{old('keyword')}}">
                     <label for="input_text">キーワード</label>
                 </div>
             </div>

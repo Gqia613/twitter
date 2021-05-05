@@ -25,7 +25,7 @@
                     <input type="datetime-local" name="reservation_time" step="60" value="{{old('reservation_time')}}">
                 </div>
                 <div class="input-field col s12">
-                    <textarea id="textarea2" class="materialize-textarea" name="content" value="{{old('content')}}" data-length="120"></textarea>
+                    <textarea id="textarea2" class="materialize-textarea" name="content" data-length="120">{{old('content')}}</textarea>
                     <label for="textarea2">テキストエリア</label>
                 </div>
                 <button class="col s4 offset-s4 btn waves-effect waves-light deep-purple" type="submit">設定
