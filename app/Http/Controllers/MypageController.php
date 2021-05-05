@@ -115,12 +115,14 @@ class MypageController extends Controller
     {
         $rules = [
             'keyword' => 'required',
-            'num' => 'required',
+            'num' => 'required|numeric|max:10',
         ];
 
         $message = [
             'keyword.required' => 'キーワードを入力して下さい。',
             'num.required' => 'ツイート数を入力して下さい。',
+            'num.integer' => 'ツイート数を数字で入力して下さい。',
+            'num.max' => 'ツイート数は10以内で入力して下さい。',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);

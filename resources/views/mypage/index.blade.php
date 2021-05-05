@@ -29,7 +29,7 @@
             </div>
             <div class="input-field col s12">
                 <textarea id="textarea2" class="materialize-textarea" name="content" data-length="120">{{old('content')}}</textarea>
-                <label for="textarea2">テキストエリア</label>
+                <label for="textarea2">投稿内容</label>
             </div>
             <button class="col s4 offset-s4 btn waves-effect waves-light deep-purple" type="submit">設定
                 <i class="material-icons right">send</i>
