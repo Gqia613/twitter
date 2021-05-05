@@ -26,6 +26,7 @@ class MypageController extends Controller
     
     public function index(Request $request)
     {
+        CooperationCheckUtil::check(Auth::id());
         date_default_timezone_set('Asia/Tokyo');
         $userId = Auth::id();
         $items = Content::where('user_id', $userId)->where('del_flag', 0)->orderBy('reservation_time', 'asc')->get();
