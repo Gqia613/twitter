@@ -3,7 +3,7 @@
 @section('title', 'ツイート検索')
 
 @section('content')
-    @error('reservation_time')
+    @error('keyword')
         <p class="center">{{$message}}</p>
     @enderror
     <div class="row">
