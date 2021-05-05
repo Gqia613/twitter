@@ -66,10 +66,26 @@ class MypageController extends Controller
 
     public function searchRes(Request $request)
     {
-        $userId = Auth::id();
-        $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
-        $tweets = SearchUtil::search($request->keyword, $tokens);
-        return view('mypage.search', ['tweets' => $tweets]);
+        $rules = [
+            'keyword' => 'required',
+        ];
+
+        $message = [
+            'keyword.required' => 'キーワードを入力して下さい。',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        if ($validator->fails()) {
+            return redirect('/search')
+            ->withErrors($validator)
+            ->withInput();
+        } else {            
+            $userId = Auth::id();
+            $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
+            $tweets = SearchUtil::search($request->keyword, $tokens);
+            return view('mypage.search', ['tweets' => $tweets]);
+        }
     }
 
     public function favorite()

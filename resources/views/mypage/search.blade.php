@@ -3,6 +3,9 @@
 @section('title', 'ツイート検索')
 
 @section('content')
+    @error('reservation_time')
+        <p class="center">{{$message}}</p>
+    @enderror
     <div class="row">
         <form class="col s12" action="/search" method="post">
             @csrf
