@@ -34,8 +34,7 @@ class AutoController extends Controller
     }
 
     public function autotweet() {
-        $tokens = Token::select(['access_token', 'access_token_secret'])->where('delete_flg', 0)->get();
-        AutoTweetUtil::autoFixedTweet($tokens);
+        AutoTweetUtil::autoFixedTweet();
     }
 
 }

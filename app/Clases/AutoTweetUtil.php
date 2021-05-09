@@ -2,76 +2,50 @@
 
 namespace App\Clases;
 
-use App\Models\Content;
+use App\Models\FixedTweetContent;
+use App\Models\Token;
 use Abraham\TwitterOAuth\TwitterOAuth;
+use App\Clases\TweetUtil;
+use Illuminate\Support\Facades\Log;
 
 class AutoTweetUtil
 {
 
-	public static function autoFixedTweet($tokens)
+	public static function autoFixedTweet()
 	{
         date_default_timezone_set('Asia/Tokyo');
 
-        $comment1 = 
-        '
-        おはようございます。
-
-今日も一日積み上げがんばりましょうー！
-
-#今日の積み上げ
-        ';
-        $comment2 = 
-        '
-        積み上げお疲れ様です。
-一休憩入れて午後もがんばりましょう。
-
-#プログラミング
-        ';
-        $comment3 = 
-        '
-        本日も一日お疲れ様でした。
-
-#今日の積み上げ
-        ';
-        $flg1 = 1;
-        $flg2 = 1;
-        $flg3 = 1;
-
-        if(date("H:i") == '06:30' && $flg1 == 1) {
-            foreach($tokens as $token) {
-                if($token->delete_flg == '0') {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment1);
-                    sleep(180);
+        switch (date("H:i")) {
+            case '06:30':
+                $fixedContents = FixedTweetContent::where('fixed_tweet_flg', 0)->get();
+                foreach($fixedContents as $content) {
+                    $token = Token::where('delete_flg', 0)->where('user_id', $content->user_id)->first();
+                    if($token->delete_flg == '0') {
+                        Log::debug('test');
+                        TweetUtil::tweet($token, $content->content1);
+                    }
                 }
-            }
-            $flg1 = 0;
-            sleep(180);
-            $flg1 = 1;
-
-        }
-        if(date("H:i") == '12:30' && $flg2 == 1) {
-            foreach($tokens as $token) {
-                if($token->delete_flg == '0') {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment2);
-                    sleep(180);
+                break;
+            case '12:30':
+                $fixedContents = FixedTweetContent::where('fixed_tweet_flg', 0)->get();
+                foreach($fixedContents as $content) {
+                    $token = Token::where('delete_flg', 0)->where('user_id', $content->user_id)->first();
+                    if($token->delete_flg == '0') {
+                        Log::debug('test');
+                        TweetUtil::tweet($token, $content->content2);
+                    }
                 }
-            }
-            $flg1 = 0;
-            sleep(180);
-            $flg2 = 1;
-
-        }
-        if(date("H:i") == '19:30' && $flg3 == 1) {
-            foreach($tokens as $token) {
-                if($token->delete_flg == '0') {
-                    AutoFallowUtil::autotweet($token->access_token, $token->access_token_secret, $comment3);
-                    sleep(180);
+                break;
+            case '18:53':
+                $fixedContents = FixedTweetContent::where('fixed_tweet_flg', 0)->get();
+                foreach($fixedContents as $content) {
+                    $token = Token::where('delete_flg', 0)->where('user_id', $content->user_id)->first();
+                    if($token->delete_flg == '0') {
+                        Log::debug('test');
+                        TweetUtil::tweet($token, $content->content3);
+                    }
                 }
-            }
-            $flg1 = 0;
-            sleep(180);
-            $flg1 = 1;
+                break;
         }
-	
 	}
 }

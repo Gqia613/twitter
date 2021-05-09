@@ -12,6 +12,7 @@ use App\Clases\AutoTweetUtil;
 use App\Clases\CooperationCheckUtil;
 use App\Models\Content;
 use App\Models\Token;
+use App\Models\FixedTweetContent;
 use Abraham\TwitterOAuth\TwitterOAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -138,6 +139,32 @@ class MypageController extends Controller
             
             return view('mypage.favorite');
         }
+    }
+
+    public function fixedtweet()
+    {
+        $userId = Auth::id();
+        $fixedContent = FixedTweetContent::where('user_id', Auth::id())->first();
+        return view('mypage.fixedtweet', ['userId' => $userId, 'fixedContent' => $fixedContent]);
+    }
+
+    public function fixedtweetRes(Request $request)
+    {
+        $fixedContent = FixedTweetContent::where('user_id', Auth::id())->first();
+
+        if(empty($fixedContent)) {
+            $this->validate($request, FixedTweetContent::$rules, FixedTweetContent::$messages);
+            $content = new FixedTweetContent;
+            $form = $request->all();
+            unset($form['_token']);
+            $content->fill($form)->save();
+        } else {
+            $fixedConttent = FixedTweetContent::find($request->user_id); 
+            $form = $request->all();
+            unset($form['_token']);
+            $fixedConttent->fill($form)->save();
+        }
+        return redirect('/fixedtweet');
     }
 
     public function auto()

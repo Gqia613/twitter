@@ -22,9 +22,13 @@ Route::get('/callback', 'MypageController@callback');
 
 Route::get('/autotweet', 'AutoController@autotweet');
 
+Route::get('/fixedtweet', 'MypageController@fixedtweet');
+Route::post('/fixedtweet', 'MypageController@fixedtweetRes');
 
 
 
-Auth::routes(['register' => false]);
+
+Auth::routes();
+// Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');
