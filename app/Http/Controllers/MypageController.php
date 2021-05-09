@@ -161,7 +161,7 @@ class MypageController extends Controller
             $content->fill($form)->save();
         } else {
             $content = FixedTweetContent::find($request->user_id); 
-            $form = $request->all();
+            // $form = $request->all();
             $form = [
                 'user_id' => $request->user_id,
                 'fixed_tweet_flg' => $request->fixed_tweet_flg,
