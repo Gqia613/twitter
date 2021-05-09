@@ -36,15 +36,15 @@
             </label>
             </p>
             <div class="input-field col s12">
-                <textarea id="textarea2" class="materialize-textarea" name="content1" data-length="120">{{$fixedContent->content1}}</textarea>
+                <textarea id="textarea2" class="materialize-textarea" name="content1" data-length="120">@empty($fixedContent->content1)@else{{$fixedContent->content1}}@endempty</textarea>
                 <label for="textarea2">6時30分 投稿内容</label>
             </div>
             <div class="input-field col s12">
-                <textarea id="textarea3" class="materialize-textarea" name="content2" data-length="120">{{$fixedContent->content2}}</textarea>
+                <textarea id="textarea3" class="materialize-textarea" name="content2" data-length="120">@empty($fixedContent->content2)@else{{$fixedContent->content2}}@endempty</textarea>
                 <label for="textarea3">12時30分 投稿内容</label>
             </div>
             <div class="input-field col s12">
-                <textarea id="textarea4" class="materialize-textarea" name="content3" data-length="120">{{$fixedContent->content3}}</textarea>
+                <textarea id="textarea4" class="materialize-textarea" name="content3" data-length="120">@empty($fixedContent->content3)@else{{$fixedContent->content3}}@endempty</textarea>
                 <label for="textarea4">19時30分 投稿内容</label>
             </div>
             <button class="col s4 offset-s4 btn waves-effect waves-light deep-purple" type="submit">設定
