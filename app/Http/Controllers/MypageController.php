@@ -162,6 +162,13 @@ class MypageController extends Controller
         } else {
             $content = FixedTweetContent::find($request->user_id); 
             $form = $request->all();
+            $form = [
+                'user_id' => $request->user_id,
+                'fixed_tweet_flg' => $request->fixed_tweet_flg,
+                'content1' => $request->content1,
+                'content2' => $request->content2,
+                'content3' => $request->content3,
+            ];
             unset($form['_token']);
             $content->fill($form)->save();
         }
