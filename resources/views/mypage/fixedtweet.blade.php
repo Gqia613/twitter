@@ -23,18 +23,29 @@
             @isset($userId)
             <input type="hidden" name="user_id" value="{{$userId}}">
             @endisset
-            <p>
-            <label>
-                <input class="with-gap" name="fixed_tweet_flg" type="radio" value="0"  />
-                <span>する</span>
-            </label>
-            </p>
-            <p>
-            <label>
-                <input class="with-gap" name="fixed_tweet_flg" type="radio" value="1"  />
-                <span>しない</span>
-            </label>
-            </p>
+            <div class="row">
+                <p class="col s12 m12 right">固定ツイート：</p>
+                <p class="col s4 m2">
+                <label>
+                    <input class="with-gap" name="fixed_tweet_flg" type="radio" value="0" 
+                    @php 
+                    echo $fixedContent->fixed_tweet_flg == '0'  ? 'checked' : '';
+                    @endphp 
+                    />
+                    <span>する</span>
+                </label>
+                </p>
+                <p class="col s4 m2">
+                <label>
+                    <input class="with-gap" name="fixed_tweet_flg" type="radio" value="1"
+                    @php 
+                    echo $fixedContent->fixed_tweet_flg == '1'  ? 'checked' : '';
+                    @endphp 
+                    />
+                    <span>しない</span>
+                </label>
+                </p>
+            </div>
             <div class="input-field col s12">
                 <textarea id="textarea2" class="materialize-textarea" name="content1" data-length="120">@empty($fixedContent->content1)@else{{$fixedContent->content1}}@endempty</textarea>
                 <label for="textarea2">6時30分 投稿内容</label>

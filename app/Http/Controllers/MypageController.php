@@ -143,9 +143,10 @@ class MypageController extends Controller
 
     public function fixedtweet()
     {
-        $userId = Auth::id();
-        $fixedContent = FixedTweetContent::where('user_id', Auth::id())->first();
-        return view('mypage.fixedtweet', ['userId' => $userId, 'fixedContent' => $fixedContent]);
+        $data = array();
+        $data['userId'] = Auth::id();
+        $data['fixedContent'] = FixedTweetContent::where('user_id', Auth::id())->first();
+        return view('mypage.fixedtweet', $data);
     }
 
     public function fixedtweetRes(Request $request)
