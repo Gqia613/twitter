@@ -160,10 +160,10 @@ class MypageController extends Controller
             unset($form['_token']);
             $content->fill($form)->save();
         } else {
-            $fixedConttent = FixedTweetContent::find($request->user_id); 
+            $content = FixedTweetContent::find($request->user_id); 
             $form = $request->all();
             unset($form['_token']);
-            $fixedConttent->fill($form)->save();
+            $content->fill($form)->save();
         }
         return redirect('/fixedtweet');
     }
