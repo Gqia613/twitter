@@ -143,6 +143,10 @@ class MypageController extends Controller
 
     public function fixedtweet()
     {
+        $checkToken = CooperationCheckUtil::check(Auth::id());        
+        if(empty($checkToken)) {
+            return redirect('/autofallow');
+        }
         $data = array();
         $data['userId'] = Auth::id();
         $data['fixedContent'] = FixedTweetContent::where('user_id', Auth::id())->first();

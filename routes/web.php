@@ -28,7 +28,6 @@ Route::post('/fixedtweet', 'MypageController@fixedtweetRes');
 
 
 
-Auth::routes();
-// Auth::routes(['register' => false]);
+Auth::routes(['register' => false]);
 
 Route::get('/home', 'HomeController@index')->name('home');

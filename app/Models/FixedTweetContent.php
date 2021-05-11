@@ -16,7 +16,7 @@ class FixedTweetContent extends Model
     );
 
     public static $messages = array(
-        'fixed_tweet_flg.required' => '投稿かするかしないか選べ！！',
+        'fixed_tweet_flg.required' => '固定ツイートするまたはしないを選択して下さい。',
         'content1.max' => '6時30分投稿内容は140字以内で入力してください。',
         'content2.max' => '12時30分投稿内容は140字以内で入力してください。',
         'content3.max' => '19時30分投稿内容は140字以内で入力してください。',

@@ -8,10 +8,16 @@
     @else
     <div class="card-panel red darken-2">
         <ul>
-            @error('reservation_time')
+            @error('fixed_tweet_flg')
             <li class="white-text">{{$message}}</li>
             @enderror
-            @error('content')
+            @error('content1')
+            <li class="white-text">{{$message}}</li>
+            @enderror
+            @error('content2')
+            <li class="white-text">{{$message}}</li>
+            @enderror
+            @error('content3')
             <li class="white-text">{{$message}}</li>
             @enderror
         </ul>
@@ -27,10 +33,13 @@
                 <p class="col s12 m12 right">固定ツイート：</p>
                 <p class="col s4 m2">
                 <label>
-                    <input class="with-gap" name="fixed_tweet_flg" type="radio" value="0" 
-                    @php 
-                    echo $fixedContent->fixed_tweet_flg == '0'  ? 'checked' : '';
-                    @endphp 
+                    <input class="with-gap" name="fixed_tweet_flg" type="radio" value="0"
+                    @empty($fixedContent->fixed_tweet_flg)
+                    @else
+                        @php 
+                        echo $fixedContent->fixed_tweet_flg == '0'  ? 'checked' : '';
+                        @endphp 
+                    @endempty
                     />
                     <span>する</span>
                 </label>
@@ -38,9 +47,12 @@
                 <p class="col s4 m2">
                 <label>
                     <input class="with-gap" name="fixed_tweet_flg" type="radio" value="1"
-                    @php 
-                    echo $fixedContent->fixed_tweet_flg == '1'  ? 'checked' : '';
-                    @endphp 
+                    @empty($fixedContent->fixed_tweet_flg)
+                    @else
+                        @php 
+                        echo $fixedContent->fixed_tweet_flg == '1'  ? 'checked' : '';
+                        @endphp 
+                    @endempty
                     />
                     <span>しない</span>
                 </label>
