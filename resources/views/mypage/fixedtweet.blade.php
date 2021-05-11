@@ -34,12 +34,11 @@
                 <p class="col s4 m2">
                 <label>
                     <input class="with-gap" name="fixed_tweet_flg" type="radio" value="0"
-                    @empty($fixedContent->fixed_tweet_flg)
-                    @else
-                        @php 
-                        echo $fixedContent->fixed_tweet_flg == '0'  ? 'checked' : '';
-                        @endphp 
-                    @endempty
+                    @if($fixedContent->fixed_tweet_flg != null)
+                        @if($fixedContent->fixed_tweet_flg == '0')
+                        checked
+                        @endif 
+                    @endif
                     />
                     <span>する</span>
                 </label>
@@ -47,12 +46,11 @@
                 <p class="col s4 m2">
                 <label>
                     <input class="with-gap" name="fixed_tweet_flg" type="radio" value="1"
-                    @empty($fixedContent->fixed_tweet_flg)
-                    @else
-                        @php 
-                        echo $fixedContent->fixed_tweet_flg == '1'  ? 'checked' : '';
-                        @endphp 
-                    @endempty
+                    @if($fixedContent->fixed_tweet_flg != null)
+                        @if($fixedContent->fixed_tweet_flg == '1')
+                        checked
+                        @endif 
+                    @endif
                     />
                     <span>しない</span>
                 </label>
