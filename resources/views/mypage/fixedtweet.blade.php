@@ -30,7 +30,7 @@
             <input type="hidden" name="user_id" value="{{$userId}}">
             @endisset
             <div class="row">
-                <p class="col s12 m12 right">固定ツイート：</p>
+                <p class="col s12 m12 right">固定ツイート：{{$fixedContent->fixed_tweet_flg}}</p>
                 <p class="col s4 m2">
                 <label>
                     <input class="with-gap" name="fixed_tweet_flg" type="radio" value="0"
