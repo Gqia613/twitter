@@ -46,6 +46,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // トークンミス
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException){
+            return back()->withErrors([trans('auth.failed')]);
+        }
         return parent::render($request, $exception);
     }
 }
