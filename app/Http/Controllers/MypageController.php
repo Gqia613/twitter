@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Clases\TweetUtil;
 use App\Clases\SearchUtil;
 use App\Clases\FavoriteUtil;
+use App\Services\FavoriteService;
 use App\Clases\AutoFallowUtil;
 use App\Clases\AutoTweetUtil;
 use App\Clases\CooperationCheckUtil;
@@ -135,7 +136,7 @@ class MypageController extends Controller
         } else {  
             $userId = Auth::id();
             $tokens = Token::select(['access_token', 'access_token_secret', 'delete_flg'])->where('user_id', $userId)->first();
-            FavoriteUtil::favorite($request->keyword, $request->num, $tokens);
+            FavoriteService::favorite($request->keyword, $request->num, $tokens);
             
             return view('mypage.favorite');
         }

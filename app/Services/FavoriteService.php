@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Clases;
+namespace App\Services;
 
 use App\Models\Content;
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-class FavoriteUtil
+class FavoriteService
 {
     public static function favorite($keyword, $num, $tokens)
     {

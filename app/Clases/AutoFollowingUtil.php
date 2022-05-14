@@ -5,7 +5,7 @@ namespace App\Clases;
 use App\Models\Content;
 use Abraham\TwitterOAuth\TwitterOAuth;
 
-class FavoriteUtil
+class AutoFollowingUtil
 {
 	public static function autofollow(string $access, string $secret, string $keyword)
 	{
